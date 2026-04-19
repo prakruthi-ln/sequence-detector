@@ -26,9 +26,9 @@ Designed a Moore FSM in Verilog to detect the binary sequence 1011 in a serial i
 
 
 
-\* Input: `1011011`
+\* Input: `1001011`
 
-\* Output: `0001001`
+\* Output: `0000001`
 
 \* Correctly detects overlapping occurrences
 
