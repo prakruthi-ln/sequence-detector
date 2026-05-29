@@ -51,11 +51,13 @@ Confirms FSM state resets correctly when reset is asserted mid-sequence.
    - After detecting 1011, the next state must consider that the last `1` could start a new sequence
    - From S4, if input is 1 → go to S1 (not S0)
    - This enables detecting 1011011 twice
+
 2.**Edge Cases Are Critical**
    - Testing only the "happy path" (1011) misses real bugs
    - All-zeros stream revealed my FSM stays in S0 correctly
    - All-ones stream showed FSM cycles in S1 (never sees 0)
    - Reset mid-sequence verified asynchronous reset works properly
+
 3. **Asynchronous Reset Is Important**
    - always @(posedge clk or posedge rst) gives reset priority
    - FSM returns to S0 immediately when reset is asserted
