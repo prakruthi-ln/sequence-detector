@@ -1,54 +1,64 @@
-\# Sequence Detector (1011) – Verilog
+SEQUENCE DETECTOR USING VERILOG FSM
 
+  A Verilog HDL implementation of a binary sequence detector using a Finite State Machine (FSM) with simulation testbench verification.
 
+Overview
 
-\## Overview
+This project implements a sequence detector in Verilog HDL that detects a predefined binary sequence from a serial input stream. The design is verified using a dedicated testbench that checks multiple cases including normal detection, overlapping sequences, reset behavior, and invalid inputs.
 
+Features
+-Binary sequence detection using FSM
+-Supports overlapping sequence detection
+-Reset functionality included
+-Fully verified with a Verilog testbench
+-Behavioral simulation compatible with Vivado 
 
+How It Works
 
-Designed a Moore FSM in Verilog to detect the binary sequence 1011 in a serial input stream with \*\*overlapping detection\*\*.
+The sequence detector continuously monitors the input bit stream and changes states according to the received input.
 
+When the target sequence is detected:
 
+-The output signal (out) becomes HIGH (1)
+-The FSM transitions appropriately for overlapping detection
 
-\## Design
+Testbench Verification
 
+The testbench validates the following scenarios:
 
+1. Normal Sequence Detection
 
-\* States represent partial pattern matches (S0 → S4)
+Checks whether the target sequence is correctly detected.
 
-\* Output goes HIGH when the sequence is detected (S4)
+2. Overlapping Sequence Detection
 
-\* On mismatch, FSM moves to the longest valid partial match instead of resetting
+Verifies detection when patterns overlap.
 
+3. All Zeroes Input
 
+Ensures false detection does not occur.
 
-\## Simulation
+4. All Ones Input
 
+Tests robustness against invalid patterns.
 
+5. Reset During Operation
 
-\* Input: `1001011`
+Confirms FSM state resets correctly when reset is asserted mid-sequence.
 
-\* Output: `0000001`
-
-\* Correctly detects overlapping occurrences
-
-
-
-\## Tools
-
-
-
-\* Verilog HDL
-
-\* Xilinx Vivado
-
-
-
-\## Key Learning
-
-
-
-Implemented FSM design and understood overlapping sequence detection using hardware logic.
-
-
-
+### KEY TAKEAWAYS
+1.**Overlapping Detection Requires Careful State Design**
+   - After detecting 1011, the next state must consider that the last `1` could start a new sequence
+   - From S4, if input is 1 → go to S1 (not S0)
+   - This enables detecting 1011011 twice
+2.**Edge Cases Are Critical**
+   - Testing only the "happy path" (1011) misses real bugs
+   - All-zeros stream revealed my FSM stays in S0 correctly
+   - All-ones stream showed FSM cycles in S1 (never sees 0)
+   - Reset mid-sequence verified asynchronous reset works properly
+3. **Asynchronous Reset Is Important**
+   - always @(posedge clk or posedge rst) gives reset priority
+   - FSM returns to S0 immediately when reset is asserted
+   - No need to wait for clock edge
+### OUTPUT WAVEFORM
+<img width="1451" height="573" alt="Screenshot 2026-05-29 182416" src="https://github.com/user-attachments/assets/85465f39-c4b6-4a50-a94f-38d802e80cdb" />
