@@ -70,8 +70,3 @@ The testbench validates the following scenarios:
 ## Simulation Result
 
 The waveform shows the sequence detector being tested under different input conditions to verify that the FSM behaves correctly in all cases. The simulation includes **normal sequence detection, overlapping patterns, all-zero inputs, all-one inputs, and reset behavior during operation**. Most of the time, the output (`out`) remains LOW (`0`), which confirms that the detector does not falsely recognize incorrect patterns. Whenever the expected sequence appears in the input stream, the output briefly goes HIGH (`1`), showing successful detection. The waveform also confirms that the reset signal correctly clears the FSM state and restarts the detection process. Overall, the simulation verifies that the sequence detector works reliably across both normal and edge-case scenarios.
-
-
-### OUTPUT WAVEFORM
-<img width="1451" height="573" alt="Screenshot 2026-05-29 182416" src="https://github.com/user-attachments/assets/85465f39-c4b6-4a50-a94f-38d802e80cdb" />
-###
